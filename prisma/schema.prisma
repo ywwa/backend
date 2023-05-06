@@ -1,0 +1,62 @@
+
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  // Base Fields [ REQUIRED ] 
+  id            Int       @id      @default(autoincrement())
+  username      String    @unique
+  email         String    @unique 
+  firstName     String   
+  lastName      String   
+  password      String   
+ 
+  role          String    @default("USER")
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @default(now())
+
+  // User Customizaton [ ADDITIONAL ]
+  image         String? /// URL TO USER PROFILE IMAGE
+  
+  groups        Group[]   @relation("Owner")
+  member        Member[]  @relation("Member")
+  logs          Log[]     @relation("Log")
+}
+
+model Group {
+  id            Int       @id       @default(autoincrement())
+  name          String    @unique
+  description   String
+  image         String?
+  owner         User      @relation("Owner", fields: [ownerId], references: [id], onDelete: Cascade)
+  ownerId       Int
+
+  members       Member[]  @relation("Members")
+}
+
+model Member {
+  id            Int       @id       @default(autoincrement())
+  user          User      @relation("Member", fields: [userId], references: [id], onDelete: Cascade)
+  userId        Int
+
+  Group         Group     @relation("Members", fields: [groupId], references: [id], onDelete: Cascade)
+  groupId       Int
+}
+
+model Log {
+  id            Int       @id       @default(autoincrement())
+  user          User      @relation("Log", fields: [userId], references: [id], onDelete: Cascade)
+  userId        Int
+  content       String
+  createdAt     DateTime  @default(now())
+}

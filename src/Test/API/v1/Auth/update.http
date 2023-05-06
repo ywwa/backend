@@ -1,0 +1,9 @@
+PUT {{BASE_URL}}/user
+Authorization: Bearer {{ACCESS_TOKEN}}
+Content-Type: application/json
+
+{
+  "user": {
+      "email": "johndoe@mail.org"
+    }
+}
