@@ -49,7 +49,7 @@ model Member {
   user          User      @relation("Member", fields: [userId], references: [id], onDelete: Cascade)
   userId        Int
 
-  Group         Group     @relation("Members", fields: [groupId], references: [id], onDelete: Cascade)
+  group         Group     @relation("Members", fields: [groupId], references: [id], onDelete: Cascade)
   groupId       Int
 }
 

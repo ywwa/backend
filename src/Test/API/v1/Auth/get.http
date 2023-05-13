@@ -1,2 +1,0 @@
-GET {{BASE_URL}}/user
-Authorization: Bearer {{ACCESS_TOKEN}}

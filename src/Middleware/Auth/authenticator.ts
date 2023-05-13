@@ -1,42 +1,39 @@
-import * as dotenv from "dotenv";
 import { Request } from "express";
 import { expressjwt as jwt } from "express-jwt";
 
-dotenv.config();
-
-if ( !process.env.JWT_SECRET ) {
+if ( !process.env.JWT_SECRET )
   throw new Error(
-    "[middleware.auth][authenticator]: Missing JWT_SECRT in enviroment"
+    "[middleware.auth][authenticator]: JWT_SECRET Missing in enviroment"
   );
-};
 
 /**
- * Function that receives a request with possibly an authorization token in the
- * headers and returns this token.
+ * Receives request with possibly authorization token in headers and returns it
  * 
  * @param req Request
- * @returns the token or undefined
+ * @returns token string
  */
 function getTokenInHeaders(req: Request) {
   const authorization = req.headers.authorization;
-  if ( !authorization ) return;
-  if ( authorization.split(" ").length != 2 ) return;
-  const [ tag, token ] = authorization.split(" ");
 
-  if ( tag === "Token" || tag === "Bearer" ) return token;
+  if ( !authorization ) return;
+  if ( authorization.split(" ").length != 2) return;
+
+  const [ tag,token ] = authorization.split(" ");
+
+  if ( tag === "Toekn" || tag === "Bearer" ) return token;
   return;
 }
 
 export const authenticate = jwt({
   algorithms: ["HS256"],
-  secret: process.env.JWT_SECRET,
-  getToken: getTokenInHeaders
+  secret    : process.env.JWT_SECRET,
+  getToken  : getTokenInHeaders
 });
 
 export const optionalAuthenticate = jwt({
   algorithms: ["HS256"],
-  secret: process.env.JWT_SECRET,
+  secret    : process.env.JWT_SECRET,
   credentialsRequired: false,
-  getToken: getTokenInHeaders
+  getToken  : getTokenInHeaders
 });
 

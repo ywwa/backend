@@ -1,23 +1,16 @@
 import express from "express";
-import { 
+import {
   authErrorHandler,
+  prismaErrorHandler,
   generalErrorHandler,
-  prismaErrorHandler
-} from "./Middleware/Handling";
-
-import apiV1 from "./Routes/API/v1";
+} from "./Middleware/Handler";
+import apiRouterV1 from "./Route/apiV1";
 
 const app = express();
 
-// allow json parsing in the body of the request.
 app.use(express.json());
 
-// api mountpoint
-app.use('/', apiV1);
-
-app.get("/", (_req, res) => {
-  return res.send("Deskify API");
-});
+app.use('/', apiRouterV1);
 
 app.use(authErrorHandler, prismaErrorHandler, generalErrorHandler);
 
