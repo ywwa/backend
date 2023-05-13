@@ -9,7 +9,6 @@ export default function viewer(
       username  : user.username,
       firstName : user.firstName,
       lastName  : user.lastName,
-      image     : user.image,
       role      : user.role,
       token     : token,
       createdAt : user.createdAt,

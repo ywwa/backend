@@ -6,9 +6,10 @@ type FullGroup = Group & {
 };
 
 export default function viewer(
-  group      : FullGroup,
+  group         : FullGroup,
+  showUserGroups: Boolean = false
 ) {
-  const ownerView = profileViewer(group.owner);
+  const ownerView = profileViewer(group.owner, showUserGroups);
 
   const view = {
     id         : group.id,

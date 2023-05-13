@@ -19,19 +19,17 @@ export default async function groupGet(
   const id = parseInt(req.params.id);
   const username = req.auth?.user?.username;
   try {
-
-    // somewher is issue that causes infinite request loading
-    const group = await dbGroupGet(id);
-    if ( !group ) return res.sendStatus(404);
-
+    // get current user and if no user found return HTTP_403
     const currentUser = await dbUserGet(username);
     if ( !currentUser ) return res.sendStatus(403);
 
-    // if ( group.ownerId !== currentUser.id )
-    //   return res.status(403);
+    // get group by id and if no group found return HTTP_404
+    const group = await dbGroupGet(id);
+    if ( !group ) return res.sendStatus(404);
+
+    if ( group.ownerId !== currentUser.id ) return res.sendStatus(403);
 
     const view = groupViewer(group);
-
     return res.status(200).json({ group: view });
   } catch (error) {
     return next(error);
