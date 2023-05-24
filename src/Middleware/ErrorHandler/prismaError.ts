@@ -11,15 +11,15 @@ import logger from "../../Utils/logger";
  * @param next NextFunction
  */
 export default async function prismaErrorHandler(
-  err : Error,
+  err: Error,
   _req: Request,
-  res : Response,
-  next: NextFunction
+  res: Response,
+  next: NextFunction,
 ) {
-  if ( !(err instanceof PrismaClientKnownRequestError ) ) return next(err);
+  if (!(err instanceof PrismaClientKnownRequestError)) return next(err);
 
   logger.debug(
-    `Treating PrismaClientKnownRequestError with code ${err.code}`
+    `Treating PrismaClientKnownRequestError with code ${err.code}`,
   );
 
   switch (err.code) {
@@ -27,21 +27,20 @@ export default async function prismaErrorHandler(
       return res
         .status(422)
         .json({
-          errors: [ `The field ${err.meta?.target} is not unique` ]
+          errors: [`The field ${err.meta?.target} is not unique`],
         });
 
     case "P2025":
       return res
         .status(422)
         .json({
-          errors: [ `${err.meta?.cause}`]
+          errors: [`${err.meta?.cause}`],
         });
 
     default:
       logger.debug(
-        `Unhandled error with code ${err.code} in prismaErrorHandler`
+        `Unhandled error with code ${err.code} in prismaErrorHandler`,
       );
       return res.sendStatus(500);
   }
 }
-

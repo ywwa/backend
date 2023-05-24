@@ -1,24 +1,20 @@
 import { Router } from "express";
-import {
-  usersRegister,
-  usersLogin
-} from "../../../Controller/Users";
+import { usersLogin, usersRegister } from "../../../Controller/Users";
 import * as validator from "../../../Middleware/Validator/User";
 
 const router = Router();
 
 // User Registration & Authorization routes
 router.post(
-  '/register',
+  "/register",
   validator.registerValidator,
-  usersRegister
+  usersRegister,
 );
 
 router.post(
-  '/login',
+  "/login",
   validator.loginValidator,
-  usersLogin
+  usersLogin,
 );
-
 
 export default router;

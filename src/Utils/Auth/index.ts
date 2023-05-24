@@ -8,24 +8,24 @@ import jwt from "jsonwebtoken";
  * @returns token
  */
 export default function createUserToken(
-  user: User
+  user: User,
 ) {
-  if ( !process.env.JWT_SECRET ) {
+  if (!process.env.JWT_SECRET) {
     throw new Error(
-      "[utils][createUserToken:7]: JWT_SECRET is missing in the enviroment"
-    )
-  };
+      "[utils][createUserToken:7]: JWT_SECRET is missing in the enviroment",
+    );
+  }
 
   const tokenObj = {
     user: {
-      id        : user.id,
-      username  : user.username,
-      email     : user.email,
-      firstName : user.firstName,
-      lastName  : user.lastName,
-      createdAt : user.createdAt,
-      updatedAt : user.updatedAt
-    }
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+    },
   };
 
   const json = JSON.stringify(tokenObj);

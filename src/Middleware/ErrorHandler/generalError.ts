@@ -10,13 +10,12 @@ import logger from "../../Utils/logger";
  * @param _next NextFunction
  */
 export default function generalErrorHandler(
-  err  : Error,
-  _req : Request,
-  res  : Response,
-  _next: NextFunction
+  err: Error,
+  _req: Request,
+  res: Response,
+  _next: NextFunction,
 ) {
   logger.error(`Unhandled error in generalErrorHandler`);
   logger.error(`${err.message}\n${err.name}\n${err.stack}`);
   return res.sendStatus(500);
 }
-

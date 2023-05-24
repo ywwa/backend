@@ -11,12 +11,12 @@ import logger from "../../Utils/logger";
  * @param next NextFunction
  */
 export default async function authErrorHandler(
-  err : Error,
+  err: Error,
   _req: Request,
-  res : Response,
-  next: NextFunction
+  res: Response,
+  next: NextFunction,
 ) {
-  if ( !(err instanceof UnauthorizedError )) return next(err);
+  if (!(err instanceof UnauthorizedError)) return next(err);
 
   logger.debug(`Authorization failed due to ${err.code}`);
 
@@ -28,18 +28,18 @@ export default async function authErrorHandler(
       return res
         .status(400)
         .json({
-        errors: {
-          header: [ "Authorization token with bad scheme" ]
-        }
-      });
-    
+          errors: {
+            header: ["Authorization token with bad scheme"],
+          },
+        });
+
     case "invalid_token":
       return res
         .status(401)
         .json({
           errors: {
-            header: [ "Authorization token is invalid" ]
-          }
+            header: ["Authorization token is invalid"],
+          },
         });
 
     default:
@@ -47,4 +47,3 @@ export default async function authErrorHandler(
       return res.sendStatus(500);
   }
 }
-

@@ -1,19 +1,19 @@
 import prisma from "../prisma";
 
 interface RequiredFields {
-  username: string,
-  email: string,
-  firstName: string,
-  lastName: string,
-  password: string
-};
+  username: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  password: string;
+}
 
 export default async function dbUserCreate(
-  info: RequiredFields
+  info: RequiredFields,
 ) {
   const user = await prisma.user.create({
-    data : { ...info }
-  })
+    data: { ...info },
+  });
 
   return user;
 }

@@ -12,19 +12,19 @@ import { ValidationError } from "../../../Utils/Types";
  * @param next NextFunction
  */
 export default async function registerValidator(
-  req : Request,
-  res : Response,
-  next: NextFunction
+  req: Request,
+  res: Response,
+  next: NextFunction,
 ) {
   const errors: ValidationError = {};
   errors.body = [];
 
-  if ( !req.body ) {
+  if (!req.body) {
     errors.body.push("Request body can not be empty");
     return res.status(400).json({ errors });
   }
 
-  if ( !req.body.user && typeof req.body.user != "object" ) {
+  if (!req.body.user && typeof req.body.user != "object") {
     errors.body.push("User must be an object inside body");
     return res.status(400).json({ errors });
   }
@@ -32,18 +32,17 @@ export default async function registerValidator(
   const { username, email, firstName, lastName, password } = req.body.user;
   const requiredChecks = { username, email, firstName, lastName, password };
 
-  for ( const [field, content] of Object.entries(requiredChecks) ) {
-    if ( typeof content != "string" || content.length == 0 ) {
+  for (const [field, content] of Object.entries(requiredChecks)) {
+    if (typeof content != "string" || content.length == 0) {
       errors.body.push(`${field} must be an non-empty string`);
     }
   }
   // TODO: MAKE PASSWORD_LENGTH GLOBAL VARIABLE TO DETERMINATE HOW LONG
   // PASSWORD SHOULD BE
-  if ( !(password.length >= 8) ) {
+  if (!(password.length >= 8)) {
     errors.body.push("password must be at least 8 characters long");
   }
 
-  if ( errors.body.length ) return res.status(400).json({ errors });
+  if (errors.body.length) return res.status(400).json({ errors });
   next();
 }
- 

@@ -23,6 +23,7 @@ model User {
 
      groups   Group[]  @relation("Owner")
    memberOf   Member[] @relation("Member")
+       logs   Log[]    @relation("User")
 }
 
 
@@ -34,6 +35,7 @@ model Group {
         owner User     @relation("Owner", fields: [ownerId], references: [id], onDelete: Cascade)
       ownerId Int
       members Member[] @relation("Group")
+     userLogs Log[]    @relation("LogGroup")
 }
 
 
@@ -46,3 +48,17 @@ model Member {
   groupId     Int      
 }
 
+model Log {
+  Id          Int      @id @default(autoincrement())
+  user        User     @relation("User", fields: [userId], references: [id], onDelete: Cascade)
+  userId      Int 
+
+  group       Group    @relation("LogGroup", fields: [groupId], references: [id], onDelete: Cascade)
+  groupId     Int
+
+  platform    String
+  processName String
+  windowName  String
+
+  createdAt   DateTime @default(now())
+}

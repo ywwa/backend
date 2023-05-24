@@ -3,16 +3,16 @@ import { Group, User } from "@prisma/client";
 type UserWithGroups = User & { groups: Group[] };
 
 export default function profileViewer(
-  user        : UserWithGroups,
-  showGroups ?: Boolean
+  user: UserWithGroups,
+  showGroups?: Boolean,
 ) {
   var groups;
-  if ( !showGroups ) {
+  if (!showGroups) {
     groups = user
       ? Boolean(
         user.groups.find(
-          (obj) => obj.ownerId == user.id
-        )
+          (obj) => obj.ownerId == user.id,
+        ),
       )
       : false;
   } else {
@@ -20,13 +20,13 @@ export default function profileViewer(
   }
 
   const profileView = {
-    username      : user.username,
-    email         : user.email,
-    firstName     : user.firstName,
-    lastName      : user.lastName,
-    image         : user.image,
-    groups        : groups
+    username: user.username,
+    email: user.email,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    image: user.image,
+    groups: groups,
   };
 
   return profileView;
-} 
+}

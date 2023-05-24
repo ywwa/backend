@@ -7,29 +7,28 @@ const logger = ws.createLogger({
   transports: [
     new ws.transports.File({
       filename: "./logs/error.log",
-      level: "error"
+      level: "error",
     }),
     new ws.transports.File({
-      filename: "./logs/combined.log"
-    })
-  ]
+      filename: "./logs/combined.log",
+    }),
+  ],
 });
 
-if ( process.env.NODE_ENV !== "prod" ) {
+if (process.env.NODE_ENV !== "prod") {
   logger.add(
     new ws.transports.Console({
       format: ws.format.simple(),
-      level: "debug"
-    })
+      level: "debug",
+    }),
   );
 
   logger.add(
     new ws.transports.File({
       filename: "./logs/debug.log",
-      level: "debug"
-    })
+      level: "debug",
+    }),
   );
-};
+}
 
 export default logger;
-

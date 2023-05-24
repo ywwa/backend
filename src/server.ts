@@ -7,21 +7,20 @@ const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 
 app.listen(port, () => {
   console.log(
-    `DeskifyAPI Express Server initialized on port ${port}`
+    `DeskifyAPI Express Server initialized on port ${port}`,
   );
 });
 
 process.on("SIGTERM", () => {
   console.log(
-    "SIGTERM Received: Closing HTTP Server"
+    "SIGTERM Received: Closing HTTP Server",
   );
   process.exit();
 });
 
 process.on("SIGINT", () => {
   console.log(
-    "SIGINT Received: Closing HTTP Server"
+    "SIGINT Received: Closing HTTP Server",
   );
   process.exit();
 });
-

@@ -8,9 +8,9 @@ import groupRouter from "./API/v1/groupRouter";
 const router = Router();
 
 // API V1 routes bind here
-router.use('/users', usersRouter);
-router.use('/user', userRouter);
-router.use('/profile', profileRouter);
-router.use('/group', groupRouter);
+router.use("/users", usersRouter);
+router.use("/user", userRouter);
+router.use("/profile", profileRouter);
+router.use("/group", groupRouter);
 
 export default router;

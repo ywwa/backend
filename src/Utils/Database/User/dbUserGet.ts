@@ -1,16 +1,16 @@
 import prisma from "../prisma";
 
 export default async function dbUserGet(
-  username : string
+  username: string,
 ) {
-  if ( !username ) return null;
+  if (!username) return null;
 
   const user = await prisma.user.findUnique({
     where: { username },
     include: {
       groups: true,
-      memberOf: true
-    }
+      memberOf: true,
+    },
   });
 
   return user;
