@@ -1,5 +1,6 @@
-export { default as groupCreate } from './create';
-export { default as groupGet } from "./get";
-export { default as groupUpdate } from "./update";
-export { default as groupDelete } from "./delete";
+export { default as groupCreate } from "./groupCreate";
+export { default as groupGet } from "./groupGet";
+export { default as groupUpdate } from "./groupUpdate";
+export { default as groupDelete } from "./groupDelete";
 
+export * from "./Member";

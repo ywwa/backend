@@ -1,4 +1,4 @@
-export { default as userViewer } from "./user";
-export { default as profileViewer } from "./profile";
-export { default as groupViewer } from "./group";
-
+export { default as userViewer } from "./userViewer";
+export { default as profileViewer } from "./profileViewer";
+export { default as groupViewer } from "./groupViewer";
+export { default as memberViewer } from "./memberViewer";

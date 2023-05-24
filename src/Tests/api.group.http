@@ -1,2 +1,0 @@
-GET {{BASE_URL}}/group/2
-Authorization: Bearer {{TOKEN}}

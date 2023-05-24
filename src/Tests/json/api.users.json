@@ -1,9 +1,0 @@
-{
-  "user": {
-    "username" : "testsUser",
-    "email"    : "tests@mail.com",
-    "firstName": "John",
-    "lastName" : "Doe",
-    "password" : "1password"
-  }
-}

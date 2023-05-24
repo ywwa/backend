@@ -1,0 +1,20 @@
+~[BASE]~
+url {{host}}/users/register
+method POST
+env ./tests/environment/dev.lua
+
+~[HEADERS]~
+accept application/json
+content-type application/json
+
+~[BODY]~
+# ship_body_file /path/to/body.json
+{
+  "user": {
+    "username": "testUser1",
+    "email": "testMail1@test.cc",
+    "firstName": "testName",
+    "lastName": "testSurname",
+    "password": "12345678"
+  }
+}

@@ -1,0 +1,19 @@
+# Created by nvim-ship
+
+~[BASE]~
+url {{host}}/users/login
+method POST
+env ./tests/environment/dev.lua
+
+~[HEADERS]~
+accept application/json
+content-type application/json
+
+~[BODY]~
+# ship_body_file /path/to/body.json
+{
+  "user": {
+    "username": "testUser",
+    "password": "newPassword"
+  }
+}

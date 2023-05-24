@@ -1,8 +1,9 @@
 node_modules
 # Keep environment variables out of version control
 .env
+.env.dev
 
 yarn.lock
 logs/
 
-src/Tests/.rest.env
+tests/environment/*.lua

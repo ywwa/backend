@@ -1,2 +1,0 @@
-GET {{BASE_URL}}/profile/testsUser
-Authorization: Bearer {{TOKEN}}

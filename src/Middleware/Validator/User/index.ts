@@ -1,4 +1,3 @@
-export { default as registerValidator } from "./register";
-export { default as loginValidator } from "./login";
-export { default as updateValidator } from "./update";
-
+export { default as registerValidator } from "./registerValidator";
+export { default as loginValidator } from "./loginValidator";
+export { default as updateValidator } from "./updateValidator";

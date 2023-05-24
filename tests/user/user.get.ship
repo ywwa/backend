@@ -1,0 +1,12 @@
+~[BASE]~
+url {{host}}/user
+method GET
+env ./tests/environment/dev.lua
+
+~[HEADERS]~
+accept application/json
+content-type application/json
+authorization Bearer {{token}}
+
+~[BODY]~
+# body?
