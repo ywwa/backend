@@ -1,6 +1,6 @@
 {
   "name": "deskify-backend",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Deskify backend API",
   "main": "dist/server.js",
   "repository": "git@github.com:deskify/backend.git",
