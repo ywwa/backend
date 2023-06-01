@@ -7,18 +7,17 @@ interface UpdateFields {
 
 export default async function dbGroupUpdate(
   id: number,
-  info: UpdateFields,
+  newGroupInfo: UpdateFields,
 ) {
-  const group = await prisma.group.update({
+  const updatedGroup = await prisma.group.update({
     where: { id },
-    data: {
-      ...info,
-    },
+    data: { ...newGroupInfo },
     include: {
-      owner: { include: { groups: true, memberOf: true } },
-      members: { include: { user: true, group: true } },
+      owner: { include: { groups: true, memberOf: true, logs: true } },
+      members: true,
+      userLogs: true,
     },
   });
 
-  return group;
+  return updatedGroup;
 }

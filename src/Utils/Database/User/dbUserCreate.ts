@@ -8,12 +8,9 @@ interface RequiredFields {
   password: string;
 }
 
-export default async function dbUserCreate(
-  info: RequiredFields,
-) {
-  const user = await prisma.user.create({
-    data: { ...info },
+export default async function dbUserCreate(data: RequiredFields) {
+  const newUser = await prisma.user.create({
+    data: { ...data },
   });
-
-  return user;
+  return newUser;
 }

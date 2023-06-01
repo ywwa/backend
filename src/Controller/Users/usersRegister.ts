@@ -1,54 +1,46 @@
 import { NextFunction, Request, Response } from "express";
-import createUserToken from "../../Utils/Auth";
-import { dbUserCreate } from "../../Utils/Database/User";
 import { passwordHash } from "../../Utils/hashpswd";
+import { dbUserCreate } from "../../Utils/Database/User";
+import createUserToken from "../../Utils/Auth";
 import { userViewer } from "../../View";
 
-interface User {
-  username: string,
-  email: string,
-  firstName: string,
-  lastName: string,
-  password: string
-};
+interface NewUser {
+  username: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  password: string;
+}
 
-/**
- * User registration controller.
- *
- * @param req Request
- * @param res Response
- * @param next NextFunction
- */
-export default async function usersRegister(
-  req : Request,
-  res : Response,
-  next: NextFunction
+export default async function fnUsersRegister(
+  req: Request,
+  res: Response,
+  next: NextFunction,
 ) {
-
   const {
     username,
     email,
     firstName,
     lastName,
-    password
-  }: User = req.body.user;
+    password,
+  }: NewUser = req.body.user;
 
   try {
     const hashedPassword: string = passwordHash(password);
-    const hashedUser: User = {
+    const hashedNewUser: NewUser = {
       username,
       email,
       firstName,
       lastName,
-      password: hashedPassword
+      password: hashedPassword,
     };
-    
-    const newUser = await dbUserCreate(hashedUser);
+
+    const newUser = await dbUserCreate(hashedNewUser);
     const userToken = createUserToken(newUser);
-    const userView  = userViewer(newUser, userToken);
+    const userView = userViewer(newUser, userToken);
 
     return res.status(201).json(userView);
   } catch (error) {
-    return next(error)
+    return next(error);
   }
 }

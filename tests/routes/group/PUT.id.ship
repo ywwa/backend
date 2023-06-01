@@ -1,5 +1,5 @@
 ~[BASE]~
-url {{host}}/user
+url {{host}}/group/7
 method PUT
 env ./tests/environment/dev.lua
 
@@ -9,10 +9,4 @@ content-type application/json
 authorization Bearer {{token}}
 
 ~[BODY]~
-{
-  "user": {
-    "firstName": "John",
-    "lastName": "Doe",
-    "password": "newPassword"
-  }
-}
+ship_body_file ./tests/data/group/update.json

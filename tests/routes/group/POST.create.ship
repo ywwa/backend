@@ -9,9 +9,4 @@ content-type application/json
 authorization Bearer {{token}}
 
 ~[BODY]~
-{
-  "group": {
-    "name": "testGroup",
-    "description": "Lorem ipsum dolor sit amet, qui minim labore adipisicing.."
-  }
-}
+ship_body_file ./tests/data/group/create.json

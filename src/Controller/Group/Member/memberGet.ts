@@ -2,10 +2,10 @@ import { NextFunction, Response } from "express";
 import { Request } from "express-jwt";
 import { dbUserGet } from "../../../Utils/Database/User";
 import { dbGroupGet } from "../../../Utils/Database/Group";
-import { dbMemberDelete, dbMemberGet } from "../../../Utils/Database/Member";
+import { dbMemberGet } from "../../../Utils/Database/Member";
 import { memberViewer } from "../../../View";
 
-export default async function fnMemberRemove(
+export default async function fnMemberGet(
   req: Request,
   res: Response,
   next: NextFunction,
@@ -17,27 +17,26 @@ export default async function fnMemberRemove(
   try {
     const authenticatedUser = await dbUserGet(username);
     if (!authenticatedUser) {
-      return res.sendStatus(403);
+      return res.sendStatus(403); // user not authenticated
     }
 
     const requestedGroup = await dbGroupGet(groupId);
     if (!requestedGroup) {
-      return res.sendStatus(404);
+      return res.sendStatus(404); // group not found
     }
 
     if (requestedGroup.ownerId !== authenticatedUser.id) {
-      return res.sendStatus(403);
+      return res.sendStatus(403); // user has no permission
     }
 
-    const deletableMember = await dbMemberGet({ groupId, userId });
-    if (!deletableMember) {
-      return res.sendStatus(404);
+    const requestedMember = await dbMemberGet({ groupId, userId });
+    if (!requestedMember) {
+      return res.sendStatus(404); // member not found
     }
 
-    const deletedMember = await dbMemberDelete(deletableMember.id);
-    const deletedMemberView = memberViewer(deletedMember);
+    const requestedMemberview = memberViewer(requestedMember);
 
-    return res.status(201).json({ member: deletedMemberView });
+    return res.status(201).json({ member: requestedMemberview });
   } catch (error) {
     return next(error);
   }

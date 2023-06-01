@@ -1,9 +1,11 @@
 ~[BASE]~
-url {{host}}/group/1
-method DELETE
+url {{host}}/group/4/members
+method GET
 env ./tests/environment/dev.lua
 
 ~[HEADERS]~
 accept application/json
 content-type application/json
 authorization Bearer {{token}}
+
+~[BODY]~

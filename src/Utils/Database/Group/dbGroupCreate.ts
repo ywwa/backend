@@ -6,19 +6,26 @@ interface RequiredFields {
 }
 
 export default async function dbGroupCreate(
-  info: RequiredFields,
+  newGroupData: RequiredFields,
   ownerId: number,
 ) {
-  const group = await prisma.group.create({
+  const newGroup = await prisma.group.create({
     data: {
-      ...info,
+      ...newGroupData,
       ownerId,
     },
     include: {
-      owner: { include: { groups: true } },
+      owner: {
+        include: {
+          groups: true,
+          memberOf: true,
+          logs: true,
+        },
+      },
       members: true,
+      userLogs: true,
     },
   });
 
-  return group;
+  return newGroup;
 }

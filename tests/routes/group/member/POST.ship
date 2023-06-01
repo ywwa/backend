@@ -1,6 +1,6 @@
 ~[BASE]~
-url {{host}}/group/1
-method PUT
+url {{host}}/group/7/members
+method POST
 env ./tests/environment/dev.lua
 
 ~[HEADERS]~
@@ -10,7 +10,8 @@ authorization Bearer {{token}}
 
 ~[BODY]~
 {
-  "group": {
-    "description": "Some placeholder description in order to verify if it works"
+  "member": {
+    "groupId": 7,
+    "userId": 11
   }
 }

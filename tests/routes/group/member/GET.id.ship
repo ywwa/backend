@@ -1,5 +1,5 @@
 ~[BASE]~
-url {{host}}/profile/testUser
+url {{host}}/group/7/member/11
 method GET
 env ./tests/environment/dev.lua
 
@@ -7,3 +7,5 @@ env ./tests/environment/dev.lua
 accept application/json
 content-type application/json
 authorization Bearer {{token}}
+
+~[BODY]~

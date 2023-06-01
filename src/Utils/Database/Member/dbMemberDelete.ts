@@ -1,8 +1,8 @@
 import prisma from "../prisma";
 
-export default async function dbMembersGet(groupId: number) {
-  const groupMembers = await prisma.member.findMany({
-    where: { groupId: groupId },
+export default async function dbMemberDelete(memberId: number) {
+  const deletedMember = await prisma.member.delete({
+    where: { id: memberId },
     include: {
       user: {
         include: {
@@ -24,8 +24,8 @@ export default async function dbMembersGet(groupId: number) {
           userLogs: true,
         },
       },
-    },
+    }
   });
 
-  return groupMembers;
+  return deletedMember;
 }

@@ -1,19 +1,42 @@
-import { Group, Member, User } from "@prisma/client";
+import { Group, Log, Member, User } from "@prisma/client";
+import profileViewer from "./profileViewer";
+import groupViewer from "./groupViewer";
 
-type VMember = Member & {
-  user: User & { groups: Group[]; memberOf: Member[] };
-  group: Group & { owner: User; members: Member[] };
+type FullMember = Member & {
+  user: User & {
+    groups: Group[];
+    memberOf: Member[];
+    logs: Log[];
+  };
+  group: Group & {
+    owner: User & {
+      groups: Group[];
+      memberOf: Member[];
+      logs: Log[];
+    };
+    members: Member[];
+    userLogs: Log[];
+  };
 };
 
 export default function memberViewer(
-  member: VMember,
+  member: FullMember,
+  showGroup = true,
 ) {
-  const memberView = {
-    group_id: member.group.id,
-    group_name: member.group.name,
+  const groupView = groupViewer(member.group);
+  const userView = profileViewer(member.user);
 
-    user_id: member.user.id,
-    user_username: member.user.username,
+  if (!showGroup) {
+    const memberView = {
+      user: userView,
+    };
+
+    return memberView;
+  }
+
+  const memberView = {
+    group: groupView,
+    user: userView,
   };
 
   return memberView;

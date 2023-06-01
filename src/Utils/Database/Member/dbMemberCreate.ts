@@ -1,8 +1,13 @@
 import prisma from "../prisma";
 
-export default async function dbMembersGet(groupId: number) {
-  const groupMembers = await prisma.member.findMany({
-    where: { groupId: groupId },
+interface NewMember {
+  groupId: number;
+  userId: number;
+}
+
+export default async function dbMemberCreate(newMemberData: NewMember) {
+  const newMember = await prisma.member.create({
+    data: { ...newMemberData },
     include: {
       user: {
         include: {
@@ -27,5 +32,5 @@ export default async function dbMembersGet(groupId: number) {
     },
   });
 
-  return groupMembers;
+  return newMember;
 }

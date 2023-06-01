@@ -2,41 +2,43 @@ import { NextFunction, Response } from "express";
 import { Request } from "express-jwt";
 import { dbUserGet } from "../../../Utils/Database/User";
 import { dbGroupGet } from "../../../Utils/Database/Group";
-import { dbMemberAdd } from "../../../Utils/Database/Member";
+import { dbMemberCreate } from "../../../Utils/Database/Member";
 import { memberViewer } from "../../../View";
 
-/**
- * Member Controller that requires authenticated user in the headers in order
- * to add new member to the group.
- *
- * @param req Request
- * @param res Response
- * @param next NextFunction
- */
-export default async function memberAdd(
-  req : Request,
-  res : Response,
-  next: NextFunction
+interface NewMember {
+  userId: number;
+  groupId: number;
+}
+
+export default async function fnMemberAdd(
+  req: Request,
+  res: Response,
+  next: NextFunction,
 ) {
   const username = req.auth?.user?.username;
   const groupId = parseInt(req.params.id);
-  const { id } = req.body.member;
+
+  const newMemberData: NewMember = req.body.member;
 
   try {
-    const currentUser = await dbUserGet(username);
-    if ( !currentUser ) return res.sendStatus(404);
+    const authenticatedUser = await dbUserGet(username);
+    if (!authenticatedUser) {
+      return res.sendStatus(403); // user unauthenticated
+    }
 
     const currentGroup = await dbGroupGet(groupId);
-    if ( !currentGroup ) return res.sendStatus(404);
+    if (!currentGroup) {
+      return res.sendStatus(404); // group not found
+    }
 
-    if ( currentGroup.ownerId !== currentUser.id )
-      return res.sendStatus(403);
+    if (currentGroup.ownerId !== authenticatedUser.id) {
+      return res.sendStatus(403); // no rights
+    }
 
-    const member = await dbMemberAdd(groupId, id);
+    const newMember = await dbMemberCreate(newMemberData);
+    const memberView = memberViewer(newMember);
 
-    const memberView = memberViewer(member);
-
-    return res.status(201).json({ member: memberView });
+    return res.json({ member: memberView });
   } catch (error) {
     return next(error);
   }
