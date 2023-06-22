@@ -1,8 +1,0 @@
-~[BASE]~
-url {{host}}/profile/{{username}}
-method GET
-
-~[HEADERS]~
-accept application/json
-content-type application/json
-

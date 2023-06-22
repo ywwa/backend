@@ -21,21 +21,21 @@ const router = Router();
 router.post("/create", authenticate, validator.createValidator, groupCreate);
 
 // Get group
-router.get("/:id", authenticate, groupGet);
+router.get("/:id([0-9]+)", authenticate, groupGet);
 
 // Update group
-router.put("/:id", authenticate, validator.updateValidator, groupUpdate);
+router.put("/:id([0-9]+)", authenticate, validator.updateValidator, groupUpdate);
 
 // Delete group
-router.delete("/:id", authenticate, groupDelete);
+router.delete("/:id([0-9]+)", authenticate, groupDelete);
 
 // Add member to group
-router.post("/:id/members", authenticate, memberAdd);
+router.post("/:id([0-9]+)/members", authenticate, memberAdd);
 
 // Get member from group
-router.get("/:gid/member/:mid([0-9]+)", authenticate, memberGet);
+router.get("/:gid([0-9]+)/member/:mid([0-9]+)", authenticate, memberGet);
 // Get all members from group
-router.get("/:id/members", authenticate, membersGet);
+router.get("/:id([0-9]+)/members", authenticate, membersGet);
 
 // Remove member from group
 router.delete("/:gid([0-9]+)/members/:mid([0-9]+)", authenticate, memberRemove);
@@ -44,7 +44,7 @@ router.delete("/:gid([0-9]+)/members/:mid([0-9]+)", authenticate, memberRemove);
 router.post("/:gid([0-9]+)/member/:mid([0-9]+)/logs", authenticate, logAdd);
 
 // Get logs from certain member
-router.get("/:gid/member/:mid([0-9]+)/logs", authenticate, logsGetMember);
+router.get("/:gid([0-9]+)/member/:mid([0-9]+)/logs", authenticate, logsGetMember);
 
  // get all logs from all members in group
 router.get("/:gid([0-9]+)/logs", authenticate, logsGet);

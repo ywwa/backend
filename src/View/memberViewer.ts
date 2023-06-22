@@ -28,6 +28,7 @@ export default function memberViewer(
 
   if (!showGroup) {
     const memberView = {
+      id: member.id,
       user: userView,
     };
 
@@ -35,6 +36,7 @@ export default function memberViewer(
   }
 
   const memberView = {
+    id: member.id,
     group: groupView,
     user: userView,
   };

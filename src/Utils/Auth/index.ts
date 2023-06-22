@@ -3,9 +3,6 @@ import jwt from "jsonwebtoken";
 
 /**
  * Creates a token containing user information for future authorization
- *
- * @param user User
- * @returns token
  */
 export default function createUserToken(
   user: User,
